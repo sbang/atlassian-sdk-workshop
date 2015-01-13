@@ -1,0 +1,4 @@
+ -*- coding: utf-8 -*-
+* Innledning
+
+Dette er kode og dokumentasjon for en workshop som skal gi en introduksjon til Atlassian SDK.
