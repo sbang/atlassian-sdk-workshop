@@ -1,0 +1,218 @@
+* Atlassian SDK workshop
+
+Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i IDEen og lett å klikke seg fram til dokumentasjon.
+** Laste ned og installere Atlassian SDK
+*** Kan ha det liggende på Dropbox evt. på en minnepinne
+** Starte opp Jira standalone
+ - Åpne et cmd.exe og starte:
+   : atlas-run-standalone --product jira
+   - Slett eventuelt først katalogen som atlas-run-standalone bruker:
+     : %USERPROFILE%\amps-standalone\target
+** Logge inn og lag eksempelprosjekt og en sak i prosjektet
+*** Åpne Jira i en nettleser
+ - URL: http://localhost:2990/jira
+ - Dersom Jira sier at URLen ikke matcher, klikk på banneret øverst for å endre navnet
+*** Logg inn som admin/admin
+*** Ta "Create project" og gi prosjektet navn
+ - Velg "Simple Issue Tracking" som prosjekttype
+   - "Simple Issue Tracking" krever ikke noen ekstra lisens
+ - Gi prosjektet navn:
+   : Eksempelprosjektet
+*** Lag en sak, legg inn "Hei verden!" i Description-feltet
+** Lag en Jira-plugin og start Jira
+ - Start cmd.exe
+ - cd til egnet sted, f.eks.
+   : mdkir %USERPROFILE%\fagdag
+   : cd %USERPROFILE%\fagdag
+** Lag en confluence-plugin:
+ : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.jira.confluence.plugins.sdkintro --non-interactive
+ : atlas-create-confluence-plugin -g no.steria.confluence -a sdkintro -v 1.0 -p no.steria.confluence.plugins.sdkintro --non-interactive
+ - <2014-12-19 fr 11:44> Alle fire argumenter (gruppe, artifact, versjon og pakke) må være på plass for at --non-interactive skal fungere
+ - <2015-01-08 to 12:45> Trenger et sted å lage prosjektet på
+   - For eclipse vil workspaces/fagdag fungere
+   - For IntelliJ: vet ikke
+** Sett opp IDEen på plugin'en
+*** Åpne Confluence-plugin'en i eclipse
+ - Åpne eclipse på et nytt workspace:
+   - I Dialogen "Workspace Launcher":
+     - Klikk på knappen "Browse"
+     - I dialogen "Select Workspace Directory":
+       - I "Folder", skriv
+         : %USERPROFILE%\fagdag
+       - Klikk på knappen "OK"
+     - Klikk på knappen "OK"
+ - Installér m2e
+ - Legg til Atlassian SDK i i m2e:
+   - Velg Window->Preferences
+   - I "Preferences"-dialogen:
+     - Velg Maven->Installations
+     - Klikk på "Add..."
+     - "Maven Installation"-dialogen:
+       - Legg inn i Folder-feltet:
+         : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1
+       - Klikk på knappen "OK"
+     - Klikk på knappen "OK"
+ - Importer prosjektet i eclipse
+   - Høyreklikk "Package Explorer" og velg: Import...
+   - I dialogen "Import"
+   - Velg Maven->Existing maven project
+   - Klikk på knappen "Next>"
+   - Klikk på knappen "Browse..."
+   - I dialogen "Select Root Folder"
+     - Velg mappen "fagdag"
+     - Klikk på knappen "OK"
+   - Klikk på knappen "Next>"
+   - Klikk på knappen "Finish"
+   - I dialogen "Incomplete Maven Goal Execution"
+     - Klikk på knappen "OK"
+       - (Byggefeilene tar vi i neste steg)
+ - Fiks byggefeil i eclipse:
+   - Høyreklikk første feil og velg: Quick Fix
+   - I "Quick fix"-dialogen:
+     - I "Select av fix", velg: Permanently mark goal compress-resources in pom.xml as ignored in eclipse build
+     - Klikk på knappen "Finish"
+   - Høyreklikk første feil og velg: Quick Fix
+   - I "Quick fix"-dialogen:
+     - I "Select av fix", velg: Permanently mark goal compress-resources in pom.xml as ignored in eclipse build
+     - I "Problems" klikk på knappen "Select All"
+     - Klikk på knappen "Finish"
+     - I dialogen "Ignore"
+       - Klikk på knappen "OK"
+   - Høyreklikk prosjektet "sdkintro" i "Package Explorer" og velg: Maven->Update Project...
+   - I dialogen "Update Maven Project"
+     - Klikk på knappen "OK"
+*** Åpne Confluence-plugin'en i IntelliJ
+** Starte med atlas-debug
+ - Først start et cmd.exe og ta:
+   : cd %USERPROFILE%\fagdag\sdkintro
+   : atlas-debug
+ - Vent til det kommer en utskrift ala dette:
+   : [INFO] confluence started successfully in 220s at http://NOLSBANG02:1990/confluence
+   : [INFO] Type Ctrl-D to shutdown gracefully
+   : [INFO] Type Ctrl-C to exit
+ - Åpne en nettleserfane på http://localhost:1990/confluence
+   - Logg inn med brukernavn
+     : admin
+     og passord
+     : admin
+ - Lag en side
+   - Klikk på knappen "Create" (øverst på sida, litt til venstre for midten)
+   - Velg "Blank page" og klikk på knappen "Create"
+   - I tittelfeltet gi en tittel. f.eks.:
+     : testside
+   - Velg: +Insert->Other Macros
+   - I dialogen "Select Macro":
+     - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
+       : hello
+     - Observer at man ikke får noen treff
+** Lag en makro i plugin'en
+ - Åpne eclipse på workspace't:
+   : %USERHOME%\fagdag
+ - Lag en ny pakke:
+   - Åpne mappen =src/main/java=
+   - Høyreklikk pakken som allerede ligger der og ta: New->Package
+   - I dialogen "New Java Package":
+     - I "Name", legg inn:
+       : no.steria.jira.confluence.plugins.sdkintro.macro
+     - Klikk på knappen "Finish"
+ - Lag en makro i pakken =no.steria.jira.confluence.plugins.sdkintro.macro=
+   - Lag en ny klasse som implementerer interface't [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/macro/Macro.html][Macro]]:
+     - Høyreklikk =no.steria.jira.confluence.plugins.sdkintro.macro= og ta New->Class
+     - I dialogen "New Java Class":
+       - I "Name", skriv:
+         : HelloJiraIssueMacro
+       - Klikk på knappen "Add..." ved "Interfaces"
+       - I dialogen "Implemented Interfaces Selection":
+         - I "Choose interfaces", skriv:
+           : macro
+         - I "Matching items", velg:
+           : Macro - com.atlassian.confluence.macro
+           (antagelig førstevalget)
+         - Klikk på knappen "OK"
+       - Klikk på knappen "Finish"
+   - Følgende kode blir generert:
+     #+BEGIN_SRC java
+       package no.steria.jira.confluence.plugins.sdkintro.macro;
+
+       import java.util.Map;
+
+       import com.atlassian.confluence.content.render.xhtml.ConversionContext;
+       import com.atlassian.confluence.macro.Macro;
+       import com.atlassian.confluence.macro.MacroExecutionException;
+
+       public class HelloJiraIssueMacro implements Macro {
+
+               @Override
+               public String execute(Map<String, String> arg0, String arg1,
+                               ConversionContext arg2) throws MacroExecutionException {
+                       // TODO Auto-generated method stub
+                       return null;
+               }
+
+               @Override
+               public BodyType getBodyType() {
+                       // TODO Auto-generated method stub
+                       return null;
+               }
+
+               @Override
+               public OutputType getOutputType() {
+                       // TODO Auto-generated method stub
+                       return null;
+               }
+
+       }
+     #+END_SRC
+   - Fiks =execute()=, argumentene (sånn at de blir de samme som i [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/macro/Macro.html#execute(java.util.Map, java.lang.String, com.atlassian.confluence.content.render.xhtml.ConversionContext)][Macro.execute()]])
+     #+BEGIN_SRC java
+       @Override
+       public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
+               // TODO Auto-generated method stub
+               return null;
+       }
+     #+END_SRC
+   - Fyll inn innhold i metodene:
+     #+BEGIN_SRC java
+       @Override
+       public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
+               return "<b>HelloJiraIssue macro is here!</b>";
+       }
+
+       @Override
+       public BodyType getBodyType() {
+               return BodyType.NONE;
+       }
+
+       @Override
+       public OutputType getOutputType() {
+               return OutputType.BLOCK;
+       }
+     #+END_SRC
+   - Legg inn klassen i plugin-konfigurasjonen:
+     - Åpne mappen =src/main/resources=
+     - Åpne fila =atlassian-plugin.xml=
+     - Legg inn følgende XML-kode i =atlassian-plugin.xml= (rett under topp-elementet =<atlassian-plugin>=)
+       #+BEGIN_SRC nxml
+         <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
+             <parameters/>
+         </xhtml-macro>
+       #+END_SRC
+ - Start et cmd.exe og ta:
+   : cd %USERPROFILE%\fagdag\sdkintro
+   : atlas-cli
+ - Når det kommer en prompt =maven>= så gi følgende kommando (fulgt av RET):
+   : pi
+ - Sjekk at makroen er på plass:
+   - Gå til Confluence i en nettleser (http://localhost:1990/confluence ) og ta Edit på sida du lagde tidligere
+   - Velg: +Insert->Other Macros
+   - I dialogen "Select Macro":
+     - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
+       : hello
+     - Observer at makroen "Hello jira issue" dukker opp, og velg denne
+     - Klikk på knappen "Insert"
+   - Klikk på knappen "Save" (nederst i side-editoren)
+ - Siden har nå teksten "HelloJiraIssue macro" i uthevet skrift
+** Legg på "issue key" som en parameter til makroen
+** Koble makroen mot Confluence
+ - Vi skal bruke [[https://docs.atlassian.com/jira/REST/latest/#d2e1223][Jira REST API]]
+ - Få inn en 
