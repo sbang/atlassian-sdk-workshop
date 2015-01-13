@@ -215,5 +215,5 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
  - Siden har nå teksten "HelloJiraIssue macro" i uthevet skrift
 ** Legg på "issue key" som en parameter til makroen
 ** Koble makroen mot Confluence
- - Vi skal bruke [[https://docs.atlassian.com/jira/REST/latest/#d2e1223][Jira REST API]]
+ - Vi skal bruke [[https://docs.atlassian.com/jira/REST/latest/#d2e4292][Jira REST API]]
  - Få inn en 
