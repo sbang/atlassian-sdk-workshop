@@ -1,3 +1,4 @@
+ -*- coding: utf-8 -*-
 * Atlassian SDK workshop
 
 Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i IDEen og lett å klikke seg fram til dokumentasjon.
