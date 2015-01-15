@@ -20,6 +20,12 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
  - Gi prosjektet navn:
    : Eksempelprosjektet
 *** Lag en sak, legg inn "Hei verden!" i Description-feltet
+ - Klikk på knappen "Create" i den øverste raden (nær midten, lengs til høyre av gruppen som starter i venstre kant av siden)
+ - I dialogen "Create Issue":
+   - I feltet "Summary", skriv:
+     : Vi må kunne vise issue-beskrivelser i Confluence
+   - I feltet "Description" (litt nede i dialogen), skriv:
+     : Når du kan lese denne teksten i Confluence er vi ferdige! Gratulerer!
 ** Lag en Jira-plugin og start Jira
  - Start cmd.exe
  - cd til egnet sted, f.eks.
@@ -100,7 +106,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    - Klikk på knappen "Create" (øverst på sida, litt til venstre for midten)
    - Velg "Blank page" og klikk på knappen "Create"
    - I tittelfeltet gi en tittel. f.eks.:
-     : testside
+     : Min testside
    - Velg: +Insert->Other Macros
    - I dialogen "Select Macro":
      - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
@@ -189,22 +195,22 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
                return OutputType.BLOCK;
        }
      #+END_SRC
-   - Legg inn klassen i plugin-konfigurasjonen:
-     - Åpne mappen =src/main/resources=
-     - Åpne fila =atlassian-plugin.xml=
-     - Legg inn følgende XML-kode i =atlassian-plugin.xml= (rett under topp-elementet =<atlassian-plugin>=)
-       #+BEGIN_SRC nxml
-         <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
-             <parameters/>
-         </xhtml-macro>
-       #+END_SRC
+ - Legg inn klassen i plugin-konfigurasjonen:
+   - Åpne mappen =src/main/resources=
+   - Åpne fila =atlassian-plugin.xml=
+   - Legg inn følgende XML-kode i =atlassian-plugin.xml= (rett under topp-elementet =<atlassian-plugin>=)
+     #+BEGIN_SRC nxml
+       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
+           <parameters/>
+       </xhtml-macro>
+     #+END_SRC
  - Start et cmd.exe og ta:
    : cd %USERPROFILE%\fagdag\sdkintro
    : atlas-cli
  - Når det kommer en prompt =maven>= så gi følgende kommando (fulgt av RET):
    : pi
  - Sjekk at makroen er på plass:
-   - Gå til Confluence i en nettleser (http://localhost:1990/confluence ) og ta Edit på sida du lagde tidligere
+   - Gå til Confluence i en nettleser (http://localhost:1990/confluence ) og ta Edit på sida du lagde tidligere ("Min testside")
    - Velg: +Insert->Other Macros
    - I dialogen "Select Macro":
      - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
@@ -214,6 +220,218 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    - Klikk på knappen "Save" (nederst i side-editoren)
  - Siden har nå teksten "HelloJiraIssue macro" i uthevet skrift
 ** Legg på "issue key" som en parameter til makroen
+ - Sjekk at makroen ikke har noen parameter:
+   - Gå til Confluence i en nettleser (http://localhost:1990/confluence ) og ta Edit på sida du lagde tidligere ("Min testside")
+     - Klikk på "Edit" (oppe til høyre på siden, samme rad som "Tools"
+     - Klikk på "Hello jira issue macro" og velg "Edit"
+     - "Preview" viser teksten "HelloJiraIssue macro is here"
+     - Ingen parametere vises
+   - Velg: +Insert->Other Macros
+   - I dialogen "Select Macro":
+     - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
+       : hello
+     - Observer at makroen "Hello jira issue" dukker opp, og velg denne
+     - Klikk på knappen "Insert"
+   - Klikk på knappen "Save" (nederst i side-editoren)
+ - Legg inn parameteren i plugin-konfigurasjonen:
+   - Åpne mappen =src/main/resources=
+   - Åpne fila =atlassian-plugin.xml=
+   - Endre <xhtml-macro>-elementet i =atlassian-plugin.xml= slik:
+     #+BEGIN_SRC nxml
+       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="my-macro">
+        <parameters>
+         <parameter name="jiraIssueKey" type="string"/>
+        </parameters>
+       </xhtml-macro>
+     #+END_SRC
+ - I cmd.exe som kjører =atlas-cli=, gi kommandoen:
+   : pi
+ - Gå tilbake til fanen åpen mot Confluence (http://localhost:1990/confluence ) og sjekk makroen nå har en parameter:
+   - Gå til "Min testside" åpen i side-editoren
+   - Klikk på "Hello jira issue macro" og velg "Edit"
+   - Makroen har nå en parameter jiraIssueKey
+ - Endre =execute()=-metoden til HelloJiraIssueMacro, til at den blir slik:
+   #+BEGIN_SRC java
+     @Override
+     public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
+             String jiraIssueKey = parameters.get("jiraIssueKey");
+             return "<b>HelloJiraIssue macro for issue: " + jiraIssueKey + "</b>";
+     }
+   #+END_SRC
+ - Ta en reload på "Min testside" og observer at teksten i fet skrift er "Hello jira issue macro for:(null)"
+** Debug inn i plugin'en
+Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" så har vi en mulighet til å debugge direkte inn i plugin'en.
+*** Med eclipse
+ - Velg fra menyen Run->Debug Configurations...
+ - I dialogen "Debug Configurations":
+   - Velg "Remote Java Appliation"
+   - Klikk på "new"-knappen (Et stående rektangel med gult plusstegn oppe til høyre)
+   - I "Name", skriv:
+     : sdkintro confluence
+   - Klikk på knappen "Browse..." ved "Project"
+   - I dialogen "Project Selection":
+     - Velg prosjektet "sdkintro" (eneste prosjekt her)
+     - Klikk på knappen "OK"
+   - Under "Connection Properties":
+     - For "Host", skriv:
+       : localhost
+     - For "Port", skriv:
+       : 5005
+   - Klikk på knappen "Debug"
+ - I =HelloJiraIssueMacro.java=:
+   - Sett breakpoint på første linje i =execute()=-metoden:
+     #+BEGIN_SRC java
+       String jiraIssueKey = parameters.get("jiraIssueKey");
+     #+END_SRC
+ - Ta en reload på "Min testside" i nettleseren
+ - Godta bytte til "Debug perspective"
+ - Debuggeren i eclipse stopper på første linje
+ - Se på variable step litt og ta continue
+ - I "Debug"-fanen:
+   - Høyreklikk "sdkintro confluence" og velg Disconnect
+ - Gå tilbake til Java perspective
+*** Med IntelliJ
+** Rapportere feil fra makroen
+Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/macro/MacroExecutionException.html][MacroExecutionException]] kan man både rapportere feil der makroen står på en Confluence-side og i loggen til Confluence.
+
+ - Endre =execute()= i =HelloJiraIssueMacro til dette:
+   #+BEGIN_SRC java
+     @Override
+     public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
+             String jiraIssueKey = parameters.get("jiraIssueKey");
+             if (null == jiraIssueKey) {
+                     throw new MacroExecutionException("A jiraIssueKey referencing a valid Jira issue is required");
+             }
+             return "<b>HelloJiraIssue macro for:" + jiraIssueKey +"</b>";
+     }
+   #+END_SRC
+ - Gå til cmd.exe som kjører =atlas-cli= og gi kommandoen:
+   : pi
+ - Ta en reload på "Min testside" og se at instedenfor "Hello jira issue macro for:(null)", står det nå "Error rendering macro 'hello-jira-issue-macro' : A jiraIssueKey referencing a valid Jira issue is required"
+ - Gå til cmd.exe som kjører =atlas-debug= og se at man finner en slik linje (SDK Confluence logger til konsoll istedenfor til f.eks. catalina.out):
+   : [INFO] [talledLocalContainer] 2015-01-14 12:49:10,731 WARN [http-1990-7] [xhtml.view.macro.ViewMacroMarshaller] marshalInternal Exception executing macro: hello-jira-issue-macro, with message: A jiraIssueKey referencing a valid Jira issue is required
+   - SDK Jira logger til en fil
 ** Koble makroen mot Confluence
  - Vi skal bruke [[https://docs.atlassian.com/jira/REST/latest/#d2e4292][Jira REST API]]
- - Få inn en 
+ - Få inn en [[https://docs.atlassian.com/applinks-api/3.2/com/atlassian/applinks/api/EntityLinkService.html][EntityLinkService]] og bruke denne til å navigere til koblet Jira:
+   - Legg til =org.json:json= som "provided" avhenghet, dvs.:
+     #+BEGIN_SRC nxml
+       <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20141113</version>
+        <scope>provided</scope>
+       </dependency>
+     #+END_SRC
+     - I Eclipse:
+       - Åpne =pom.xml= i sdkintro-prosjeket
+       - Velg fanen "Dependencies"
+       - Klikk på knappen "Add..."
+       - I dialogen "Select Dependency"
+         - I "Enter groupId, artifactId or sha1 prefi or pattern(*)", skriv:
+           : org.json
+         - I "Search results":
+           - velg "org.json json"
+             - Mulig at du må scrolle nedover for å finne den
+         - I "Scope", velg "provided"
+         - Klikk på knappen "OK"
+       - Lagre =pom.xml=
+     - I IntelliJ:
+       - TBD!
+   - Legg til =EntityLinkService= som en komponentavhengighet:
+     - Åpne =src/main/resoures=-mappen
+     - Åpne =atlassian-plugin.xml=
+     - Jeg inn følgende linje etter ekisterende <component-import>:
+       #+BEGIN_SRC nxml
+         <component-import key="entityLinkService" interface="com.atlassian.applinks.api.EntityLinkService" />
+       #+END_SRC
+   - Lag en konstruktør (og et felt) i HelloJiraIssueMacro, som ser sånn ut:
+     #+BEGIN_SRC java
+       private EntityLinkService entityLinkService;
+
+       public HelloJiraIssueMacro(EntityLinkService entityLinkService) {
+               this.entityLinkService = entityLinkService;
+       }
+     #+END_SRC
+     Det vi gjør her, er å få en [[https://developer.atlassian.com/display/CONFDEV/Accessing+Confluence+Components+from+Plugin+Modules#AccessingConfluenceComponentsfromPluginModules-Constructor-basedinjection(v2plugins)][Spring dependency injection]] av [[https://docs.atlassian.com/applinks-api/3.2/com/atlassian/applinks/api/EntityLinkService.html][EntityLinkService]]
+     
+     EntityLinkService-objektet skal vi så bruke til å få kontakt med en Jira-instans.
+   - Endre =execute()=-metoden til å se slik ut:
+     #+BEGIN_SRC java
+       @Override
+       public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
+               String jiraIssueKey = parameters.get("jiraIssueKey");
+               if (null == jiraIssueKey) {
+                       throw new MacroExecutionException("A jiraIssueKey referencing a valid Jira issue is required");
+               }
+
+               // Find the factory that creates requests
+               Space currentSpaceForPageWithMacro = spaceManager.getSpace(context.getSpaceKey());
+               EntityLink jiraProjectLink = entityLinkService.getPrimaryEntityLink(currentSpaceForPageWithMacro, JiraProjectEntityType.class);
+               if (null == jiraProjectLink) {
+                       throw new MacroExecutionException("No application link from the Confluence space \"" + currentSpaceForPageWithMacro.getName() + "\" to a Jira project!");
+               }
+               ApplicationLinkRequestFactory jiraRequestFactory = jiraProjectLink.getApplicationLink().createAuthenticatedRequestFactory();
+
+               // Do a REST API call to fetch the data of the issue of the macro parameter
+               String jiraIssueRESTEndpoint = "/rest/api/2/issue/" + jiraIssueKey;
+               String jiraIssueJson = null;
+               try {
+                       ApplicationLinkRequest jiraIssueGetRequest = jiraRequestFactory.createRequest(MethodType.GET, jiraIssueRESTEndpoint);
+                       jiraIssueJson = jiraIssueGetRequest.execute();
+                       JSONObject jiraIssue = new JSONObject(jiraIssueJson);
+                       JSONObject jiraIssueFields = jiraIssue.getJSONObject("fields");
+
+                       String jiraIssueDescription = jiraIssueFields.getString("description");
+
+                       return "<b>Description for issue " + jiraIssueKey + ":</b> " + jiraIssueDescription + "<br/>";
+               } catch (CredentialsRequiredException e) {
+                       // Re-throw as a MacroExecutionException, which is what Confluence expects.
+                       throw new MacroExecutionException(e);
+               } catch (ResponseException e) {
+                       // Re-throw as a MacroExecutionException, which is what Confluence expects.
+                       throw new MacroExecutionException(e);
+               } catch (JSONException e) {
+                       String msg = "Problems parsing response as JSON: " + e.getMessage() + "  received JSON: " + jiraIssueJson;
+                       throw new MacroExecutionException(msg);
+               }
+       }
+     #+END_SRC
+ - Gå til cmd.exe som kjører =atlas-cli= og gi kommandoen:
+   : pi
+ - Ta en reload på "Min testside" og se at det fortsatt står "Error rendering macro 'hello-jira-issue-macro' : A jiraIssueKey referencing a valid Jira issue is required"
+ - Klikk på "Edit" (oppe til høyre på "Min testside")
+ - Klikk på "Hello jira issue macro" (grå boks) og velg "Edit"
+ - I dialogen "Edit 'Hello jira issue macro' Macro":
+   - i "jiraIssueKey", skriv:
+     : EK-1
+   - Klikk på knappen "Save"
+ - Klikk på "Save" (nederst på sida i sideeditoren)
+ - Merk at teksten i siden har endret seg, og at det nå står: "Error rendering macro 'hello-jira-issue-macro' : No application link from the Confluence space "Demonstration Space" to a Jira project!"
+ - Så da må vi først koble sammen Confluence og Jira
+   - I Confluence, åpne tannhjulsmenyen oppe til høyre og velg "General Configuration"
+   - I siden som åpnes i nettleseren, skroll nederst på sida og velg "Application Links" fra lista i venstre kant (under "ADMINISTRATION")
+   - I boksen med teksten "Enter the URL of the application you want to link", skriv:
+     : http://localhost:2990/jira
+   - Klikk på knappen "Create new link"
+   - I dialogen "Link applications"
+     - Kryss av "The server have the same set of users and usernames"
+     - Klikk på knappen "Continue"
+     - Klikk på knappen "Continue" en gang til
+   - Klikk på "Edit" helt til høyre på linja som starter med "Your Company JIRA"
+   - I dialogen "Configure Your Company JIRA":
+     - Velg "Outgoing Authentication"
+     - Velg fanen "Trusted Applications", skroll ned til bunnen og klikk på knappen "Enable"
+     - Velg "Incoming Authentication"
+     - Velg fanen "Trusted Applications", skroll ned til bunnen og klikk på knappen "Enable"
+       - Dersom det kommer en feilmelding, bare klikk på URLen som vises
+     - Klikk på "Close"
+ - Når Confluence og Jira er koblet sammen, så må vi koble sammen Confluence-space't med et Jira-prosjekt
+   - Velg fra menyen på toppen: Spaces->Demonstration Space
+   - Velg "Space.tools->Integrations" fra dropdownmenyen nederst til venstre
+   - Åpne "+ Add Link" (til høyre på siden), velg: Your Company JIRA (JIRA)
+   - I dialogen "Enter link details":
+     - Klikk på knappen "Create"
+   - Klikk på "Pages" (oppe til venstre på siden)
+   - Velg "Min testside", denne bør nå inneholde teksten "*Description for issue EK-1*: Når du kan lese denne teksten i Confluence er vi ferdige! Gratulerer!"
+
