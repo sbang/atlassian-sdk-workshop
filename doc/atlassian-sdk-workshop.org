@@ -6,10 +6,11 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
  - Se [[https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project/install-the-atlassian-sdk-on-a-windows-system][Install the Atlassian SDK on a Windows System]]
 
 ** Starte opp Jira standalone
- - Åpne et cmd.exe og starte:
+ - Åpne et cmd.exe og gi følgende kommandoer:
+   : cd %USERPROFILE%
+   : del /s /q %USERPROFILE%\amps-standalone\target
    : atlas-run-standalone --product jira
-   - Slett eventuelt først katalogen som atlas-run-standalone bruker:
-     : %USERPROFILE%\amps-standalone\target
+   - /Merk:/: =del=-kommandoen over sletter en eksisterende standalone-Jira, så om man allerede har en sånn instans man vil ta vare på, så /ikke/ kjør kommandoen
 ** Logge inn og lag eksempelprosjekt og en sak i prosjektet
 *** Åpne Jira i en nettleser
  - URL: http://localhost:2990/jira
