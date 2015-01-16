@@ -33,11 +33,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    : cd %USERPROFILE%\fagdag
 ** Lag en confluence-plugin:
  : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.jira.confluence.plugins.sdkintro --non-interactive
- : atlas-create-confluence-plugin -g no.steria.confluence -a sdkintro -v 1.0 -p no.steria.confluence.plugins.sdkintro --non-interactive
- - <2014-12-19 fr 11:44> Alle fire argumenter (gruppe, artifact, versjon og pakke) må være på plass for at --non-interactive skal fungere
- - <2015-01-08 to 12:45> Trenger et sted å lage prosjektet på
-   - For eclipse vil workspaces/fagdag fungere
-   - For IntelliJ: vet ikke
+ - /Merk:/ Alle fire argumenter (gruppe, artifact, versjon og pakke) må være på plass for at =--non-interactive= skal fungere
 ** Sett opp IDEen på plugin'en
 *** Åpne Confluence-plugin'en i eclipse
  - Åpne eclipse på et nytt workspace:
