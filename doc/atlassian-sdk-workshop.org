@@ -95,7 +95,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    : [INFO] confluence started successfully in 220s at http://NOLSBANG02:1990/confluence
    : [INFO] Type Ctrl-D to shutdown gracefully
    : [INFO] Type Ctrl-C to exit
- - Åpne en nettleserfane på http://localhost:1990/confluence
+ - Åpne en nettleserfane på [[http://localhost:1990/confluence]]
    - Logg inn med brukernavn
      : admin
      og passord
@@ -208,7 +208,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
  - Når det kommer en prompt =maven>= så gi følgende kommando (fulgt av RET):
    : pi
  - Sjekk at makroen er på plass:
-   - Gå til Confluence i en nettleser (http://localhost:1990/confluence ) og ta Edit på sida du lagde tidligere ("Min testside")
+   - Gå til Confluence i en nettleser ([[http://localhost:1990/confluence]]) og ta Edit på sida du lagde tidligere ("Min testside")
    - Velg: +Insert->Other Macros
    - I dialogen "Select Macro":
      - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
@@ -219,7 +219,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
  - Siden har nå teksten "HelloJiraIssue macro" i uthevet skrift
 ** Legg på "issue key" som en parameter til makroen
  - Sjekk at makroen ikke har noen parameter:
-   - Gå til Confluence i en nettleser (http://localhost:1990/confluence ) og ta Edit på sida du lagde tidligere ("Min testside")
+   - Gå til Confluence i en nettleser ([[http://localhost:1990/confluence]]) og ta Edit på sida du lagde tidligere ("Min testside")
      - Klikk på "Edit" (oppe til høyre på siden, samme rad som "Tools"
      - Klikk på "Hello jira issue macro" og velg "Edit"
      - "Preview" viser teksten "HelloJiraIssue macro is here"
@@ -244,7 +244,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
      #+END_SRC
  - I cmd.exe som kjører =atlas-cli=, gi kommandoen:
    : pi
- - Gå tilbake til fanen åpen mot Confluence (http://localhost:1990/confluence ) og sjekk makroen nå har en parameter:
+ - Gå tilbake til fanen åpen mot Confluence ([[http://localhost:1990/confluence]]) og sjekk makroen nå har en parameter:
    - Gå til "Min testside" åpen i side-editoren
    - Klikk på "Hello jira issue macro" og velg "Edit"
    - Makroen har nå en parameter jiraIssueKey
