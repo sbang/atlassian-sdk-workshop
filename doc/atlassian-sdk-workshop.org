@@ -13,7 +13,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    - /Merk:/: =del=-kommandoen over sletter en eksisterende standalone-Jira, så om man allerede har en sånn instans man vil ta vare på, så /ikke/ kjør kommandoen
 ** Logge inn og lag eksempelprosjekt og en sak i prosjektet
 *** Åpne Jira i en nettleser
- - URL: [http://localhost:2990/jira]
+ - URL: [[http://localhost:2990/jira]]
  - Dersom Jira sier at URLen ikke matcher, klikk på banneret øverst for å endre navnet
 *** Logg inn som admin/admin
 *** Ta "Create project" og gi prosjektet navn
