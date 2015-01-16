@@ -4,36 +4,54 @@
 Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i IDEen og lett å klikke seg fram til dokumentasjon.
 ** Laste ned og installere Atlassian SDK
  - Se [[https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project/install-the-atlassian-sdk-on-a-windows-system][Install the Atlassian SDK on a Windows System]]
+ - Oppsett av eclipse
+   - Installer eclipse
+   - Installér m2e
+ - Oppsett av IntelliJ
+   - /TBD/
 
 ** Starte opp Jira standalone
  - Åpne et cmd.exe og gi følgende kommandoer:
    : cd %USERPROFILE%
-   : del /s /q %USERPROFILE%\amps-standalone\target
+   : rmdir /s /q %USERPROFILE%\amps-standalone\target
    : atlas-run-standalone --product jira
-   - /Merk:/: =del=-kommandoen over sletter en eksisterende standalone-Jira, så om man allerede har en sånn instans man vil ta vare på, så /ikke/ kjør kommandoen
+   - /Merk:/: =rmdir=-kommandoen over sletter en eksisterende standalone-Jira, så om man allerede har en sånn instans man vil ta vare på, så /ikke/ kjør kommandoen
+   - Når en tekst som dette vises i cmd.exe-vinduet, gå til [[Logge inn og lag eksempelprosjekt og en sak i prosjektet][neste steg]]:
+     #+BEGIN_EXAMPLE
+       ...
+       [INFO] [talledLocalContainer] Tomcat 7.x started on port [2990]
+       [INFO] jira started successfully in 301s at http://NOLSBANG02:2990/jira
+       [INFO] Type Ctrl-D to shutdown gracefully
+       [INFO] Type Ctrl-C to exit
+     #+END_EXAMPLE
 ** Logge inn og lag eksempelprosjekt og en sak i prosjektet
-*** Åpne Jira i en nettleser
- - URL: [[http://localhost:2990/jira]]
- - Dersom Jira sier at URLen ikke matcher, klikk på banneret øverst for å endre navnet
-*** Logg inn som admin/admin
-*** Ta "Create project" og gi prosjektet navn
- - Velg "Simple Issue Tracking" som prosjekttype
-   - "Simple Issue Tracking" krever ikke noen ekstra lisens
- - Gi prosjektet navn:
-   : Eksempelprosjektet
-*** Lag en sak, legg inn "Hei verden!" i Description-feltet
- - Klikk på knappen "Create" i den øverste raden (nær midten, lengs til høyre av gruppen som starter i venstre kant av siden)
+ - Åpne [[http://localhost:2990/jira]] i en fane på en nettleser
+ - Som "Username", skriv
+   : admin
+   som passord, skriv
+   : admin
+   Kryss av for "Remember my login on this computer"
+ - Dersom Jira sier at URLen ikke matcher, klikk på banneret øverst for å endre navnet (klikk på "Update JIRA's base URL")
+ - Åpne fra toppmenyen Projects->Create Project
+ - I dialogen "Select Project Type":
+   - Velg "Simple Issue Tracking" som prosjekttype
+   - Klikk på knappen "Next"
+   - Klikk på knappen "Select"
+   - I "Name", skriv inn:
+     : Eksempelprosjektet
+   - Klikk på knappen "Submit"
+ - Klikk på knappen "Create issue" (til høyre under "Get your project started")
  - I dialogen "Create Issue":
    - I feltet "Summary", skriv:
      : Vi må kunne vise issue-beskrivelser i Confluence
    - I feltet "Description" (litt nede i dialogen), skriv:
      : Når du kan lese denne teksten i Confluence er vi ferdige! Gratulerer!
-** Lag en Jira-plugin og start Jira
+   - Klikk på knappen "Create"
+** Lag en confluence-plugin:
  - Start cmd.exe
  - cd til egnet sted, f.eks.
-   : mdkir %USERPROFILE%\fagdag
+   : mkdir %USERPROFILE%\fagdag
    : cd %USERPROFILE%\fagdag
-** Lag en confluence-plugin:
  : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.jira.confluence.plugins.sdkintro --non-interactive
  - /Merk:/ Alle fire argumenter (gruppe, artifact, versjon og pakke) må være på plass for at =--non-interactive= skal fungere
 ** Sett opp IDEen på plugin'en
@@ -46,7 +64,6 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
          : %USERPROFILE%\fagdag
        - Klikk på knappen "OK"
      - Klikk på knappen "OK"
- - Installér m2e
  - Legg til Atlassian SDK i i m2e:
    - Velg Window->Preferences
    - I "Preferences"-dialogen:
@@ -76,6 +93,8 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    - I "Quick fix"-dialogen:
      - I "Select av fix", velg: Permanently mark goal compress-resources in pom.xml as ignored in eclipse build
      - Klikk på knappen "Finish"
+     - I dialogen "Ignore"
+       - Klikk på knappen "OK"
    - Høyreklikk første feil og velg: Quick Fix
    - I "Quick fix"-dialogen:
      - I "Select av fix", velg: Permanently mark goal compress-resources in pom.xml as ignored in eclipse build
@@ -100,25 +119,30 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
      : admin
      og passord
      : admin
+     Kryss av for "Remember me"
  - Lag en side
    - Klikk på knappen "Create" (øverst på sida, litt til venstre for midten)
-   - Velg "Blank page" og klikk på knappen "Create"
-   - I tittelfeltet gi en tittel. f.eks.:
+   - I dialogen "Create":
+     - Velg "Blank page"
+     - Klikk på knappen "Create"
+   - I tittelfeltet (der det står "New page") gi en tittel. f.eks.:
      : Min testside
    - Velg: +Insert->Other Macros
    - I dialogen "Select Macro":
      - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
        : hello
      - Observer at man ikke får noen treff
+     - Klikk på "Cancel"
+   - Klikk på knappen "Save"
 ** Lag en makro i plugin'en
- - Åpne eclipse på workspace't:
-   : %USERHOME%\fagdag
+*** I eclipse
+ - Åpne eclipse på [[Åpne Confluence-plugin'en i eclipse][workspace't der man importerte plugin-prosjektet]]
  - Lag en ny pakke:
    - Åpne mappen =src/main/java=
    - Høyreklikk pakken som allerede ligger der og ta: New->Package
    - I dialogen "New Java Package":
      - I "Name", legg inn:
-       : no.steria.jira.confluence.plugins.sdkintro.macro
+       : no.steria.jira.confluence.plugins.sdkintro.macros
      - Klikk på knappen "Finish"
  - Lag en makro i pakken =no.steria.jira.confluence.plugins.sdkintro.macro=
    - Lag en ny klasse som implementerer interface't [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/macro/Macro.html][Macro]]:
@@ -196,13 +220,13 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
  - Legg inn klassen i plugin-konfigurasjonen:
    - Åpne mappen =src/main/resources=
    - Åpne fila =atlassian-plugin.xml=
-   - Legg inn følgende XML-kode i =atlassian-plugin.xml= (rett under topp-elementet =<atlassian-plugin>=)
+   - Legg inn følgende XML-kode i =atlassian-plugin.xml= (nivået under topp-elementet =<atlassian-plugin>=, rett etter =<web-resource>=)
      #+BEGIN_SRC nxml
        <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
            <parameters/>
        </xhtml-macro>
      #+END_SRC
- - Start et cmd.exe og ta:
+ - Start et nytt cmd.exe og ta:
    : cd %USERPROFILE%\fagdag\sdkintro
    : atlas-cli
  - Når det kommer en prompt =maven>= så gi følgende kommando (fulgt av RET):
@@ -216,7 +240,9 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
      - Observer at makroen "Hello jira issue" dukker opp, og velg denne
      - Klikk på knappen "Insert"
    - Klikk på knappen "Save" (nederst i side-editoren)
- - Siden har nå teksten "HelloJiraIssue macro" i uthevet skrift
+ - Siden har nå teksten "*HelloJiraIssue macro is here!*"
+*** I IntelliJ
+ - /TBD/
 ** Legg på "issue key" som en parameter til makroen
  - Sjekk at makroen ikke har noen parameter:
    - Gå til Confluence i en nettleser ([[http://localhost:1990/confluence]]) og ta Edit på sida du lagde tidligere ("Min testside")
@@ -224,13 +250,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
      - Klikk på "Hello jira issue macro" og velg "Edit"
      - "Preview" viser teksten "HelloJiraIssue macro is here"
      - Ingen parametere vises
-   - Velg: +Insert->Other Macros
-   - I dialogen "Select Macro":
-     - I tekstboksen oppe til høyre (til venstre for hyperlenken "Help"), skriv inn:
-       : hello
-     - Observer at makroen "Hello jira issue" dukker opp, og velg denne
-     - Klikk på knappen "Insert"
-   - Klikk på knappen "Save" (nederst i side-editoren)
+   - Klikk på "Cancel" (nederst i side-editoren)
  - Legg inn parameteren i plugin-konfigurasjonen:
    - Åpne mappen =src/main/resources=
    - Åpne fila =atlassian-plugin.xml=
@@ -256,6 +276,8 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
              return "<b>HelloJiraIssue macro for issue: " + jiraIssueKey + "</b>";
      }
    #+END_SRC
+ - I cmd.exe som kjører =atlas-cli=, gi kommandoen:
+   : pi
  - Ta en reload på "Min testside" og observer at teksten i fet skrift er "Hello jira issue macro for:(null)"
 ** Debug inn i plugin'en
 Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" så har vi en mulighet til å debugge direkte inn i plugin'en.
@@ -306,6 +328,14 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
  - Gå til cmd.exe som kjører =atlas-cli= og gi kommandoen:
    : pi
  - Ta en reload på "Min testside" og se at instedenfor "Hello jira issue macro for:(null)", står det nå "Error rendering macro 'hello-jira-issue-macro' : A jiraIssueKey referencing a valid Jira issue is required"
+ - Klikk på "Edit" (oppe til høyre på "Min testside")
+ - Klikk på "Hello jira issue macro" (grå boks) og velg "Edit"
+ - I dialogen "Edit 'Hello jira issue macro' Macro":
+   - I "jiraIssueKey", skriv:
+     : EK-1
+   - Klikk på knappen "Save"
+ - Klikk på "Save" (nederst på sida i sideeditoren)
+ - Siden vil nå vise teksten "*HelloJiraIssue macro for:EK-1*"
  - Gå til cmd.exe som kjører =atlas-debug= og se at man finner en slik linje (SDK Confluence logger til konsoll istedenfor til f.eks. catalina.out):
    : [INFO] [talledLocalContainer] 2015-01-14 12:49:10,731 WARN [http-1990-7] [xhtml.view.macro.ViewMacroMarshaller] marshalInternal Exception executing macro: hello-jira-issue-macro, with message: A jiraIssueKey referencing a valid Jira issue is required
    - SDK Jira logger til en fil
@@ -339,21 +369,24 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
    - Legg til =EntityLinkService= som en komponentavhengighet:
      - Åpne =src/main/resoures=-mappen
      - Åpne =atlassian-plugin.xml=
-     - Jeg inn følgende linje etter ekisterende <component-import>:
+     - Legg inn følgende linje etter ekisterende <component-import>:
        #+BEGIN_SRC nxml
          <component-import key="entityLinkService" interface="com.atlassian.applinks.api.EntityLinkService" />
        #+END_SRC
-   - Lag en konstruktør (og et felt) i HelloJiraIssueMacro, som ser sånn ut:
+   - Lag en konstruktør (og to felt) i HelloJiraIssueMacro, som ser sånn ut:
      #+BEGIN_SRC java
+       private SpaceManager spaceManager;
        private EntityLinkService entityLinkService;
 
-       public HelloJiraIssueMacro(EntityLinkService entityLinkService) {
+       public HelloJiraIssueMacro(SpaceManager spaceManager, EntityLinkService entityLinkService) {
                this.entityLinkService = entityLinkService;
+               this.spaceManager = spaceManager;
        }
      #+END_SRC
-     Det vi gjør her, er å få en [[https://developer.atlassian.com/display/CONFDEV/Accessing+Confluence+Components+from+Plugin+Modules#AccessingConfluenceComponentsfromPluginModules-Constructor-basedinjection(v2plugins)][Spring dependency injection]] av [[https://docs.atlassian.com/applinks-api/3.2/com/atlassian/applinks/api/EntityLinkService.html][EntityLinkService]]
+     Det vi gjør her, er å få [[https://developer.atlassian.com/display/CONFDEV/Accessing+Confluence+Components+from+Plugin+Modules#AccessingConfluenceComponentsfromPluginModules-Constructor-basedinjection(v2plugins)][Spring dependency injection]] av [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/spaces/SpaceManager.html][SpaceManager]] og [[https://docs.atlassian.com/applinks-api/3.2/com/atlassian/applinks/api/EntityLinkService.html][EntityLinkService]]
      
-     EntityLinkService-objektet skal vi så bruke til å få kontakt med en Jira-instans.
+     SpaceManager-objektet skal vi bruke til å finne et [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/spaces/Space.html][Space]]
+     EntityLinkService-objektet skal vi så bruke til å få kontakt med et Jira-prosjekt som er koblet mot prosjektet, og derfra en Jira-instans.
    - Endre =execute()=-metoden til å se slik ut:
      #+BEGIN_SRC java
        @Override
@@ -397,15 +430,10 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
      #+END_SRC
  - Gå til cmd.exe som kjører =atlas-cli= og gi kommandoen:
    : pi
- - Ta en reload på "Min testside" og se at det fortsatt står "Error rendering macro 'hello-jira-issue-macro' : A jiraIssueKey referencing a valid Jira issue is required"
- - Klikk på "Edit" (oppe til høyre på "Min testside")
- - Klikk på "Hello jira issue macro" (grå boks) og velg "Edit"
- - I dialogen "Edit 'Hello jira issue macro' Macro":
-   - i "jiraIssueKey", skriv:
-     : EK-1
-   - Klikk på knappen "Save"
- - Klikk på "Save" (nederst på sida i sideeditoren)
- - Merk at teksten i siden har endret seg, og at det nå står: "Error rendering macro 'hello-jira-issue-macro' : No application link from the Confluence space "Demonstration Space" to a Jira project!"
+ - Ta en reload på "Min testside" og se at teksten endrer seg fra 
+   : Error rendering macro 'hello-jira-issue-macro' : A jiraIssueKey referencing a valid Jira issue is required
+   til
+   : Error rendering macro 'hello-jira-issue-macro' : No application link from the Confluence space "Demonstration Space" to a Jira project!
  - Så da må vi først koble sammen Confluence og Jira
    - I Confluence, åpne tannhjulsmenyen oppe til høyre og velg "General Configuration"
    - I siden som åpnes i nettleseren, skroll nederst på sida og velg "Application Links" fra lista i venstre kant (under "ADMINISTRATION")
