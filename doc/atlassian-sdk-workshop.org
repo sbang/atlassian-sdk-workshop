@@ -3,7 +3,8 @@
 
 Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i IDEen og lett å klikke seg fram til dokumentasjon.
 ** Laste ned og installere Atlassian SDK
-*** Kan ha det liggende på Dropbox evt. på en minnepinne
+ - Se [[https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project/install-the-atlassian-sdk-on-a-windows-system][Install the Atlassian SDK on a Windows System]]
+
 ** Starte opp Jira standalone
  - Åpne et cmd.exe og starte:
    : atlas-run-standalone --product jira
