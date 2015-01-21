@@ -10,20 +10,17 @@ public class HelloJiraIssueMacro implements Macro {
 
 	@Override
 	public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
-	        // TODO Auto-generated method stub
-	        return null;
+	        return "<b>HelloJiraIssue macro is here!</b>";
 	}
 
 	@Override
 	public BodyType getBodyType() {
-		// TODO Auto-generated method stub
-		return null;
+	        return BodyType.NONE;
 	}
 
 	@Override
 	public OutputType getOutputType() {
-		// TODO Auto-generated method stub
-		return null;
+	        return OutputType.BLOCK;
 	}
 
 }
