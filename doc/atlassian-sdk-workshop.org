@@ -15,7 +15,7 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    : cd %USERPROFILE%
    : rmdir /s /q %USERPROFILE%\amps-standalone\target
    : atlas-run-standalone --product jira
-   - /Merk:/: =rmdir=-kommandoen over sletter en eksisterende standalone-Jira, så om man allerede har en sånn instans man vil ta vare på, så /ikke/ kjør kommandoen
+   - /Merk:/ =rmdir=-kommandoen over sletter en eksisterende standalone-Jira, så om man allerede har en sånn instans man vil ta vare på, så /ikke/ kjør kommandoen
    - Når en tekst som dette vises i cmd.exe-vinduet, gå til [[Logge inn og lag eksempelprosjekt og en sak i prosjektet][neste steg]]:
      #+BEGIN_EXAMPLE
        ...
