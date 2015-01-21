@@ -20,7 +20,11 @@
 
         <context>sdkintro</context>
     </web-resource>
-    
+
+    <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
+     <parameters/>
+    </xhtml-macro>
+   
     <!-- publish our component -->
     <component key="myPluginComponent" class="no.steria.jira.confluence.plugins.sdkintro.MyPluginComponentImpl" public="true">
         <interface>no.steria.jira.confluence.plugins.sdkintro.MyPluginComponent</interface>
