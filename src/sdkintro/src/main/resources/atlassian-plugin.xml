@@ -22,7 +22,9 @@
     </web-resource>
 
     <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
-     <parameters/>
+     <parameters>
+      <parameter name="jiraIssueKey" type="string"/>
+     </parameters>
     </xhtml-macro>
    
     <!-- publish our component -->
