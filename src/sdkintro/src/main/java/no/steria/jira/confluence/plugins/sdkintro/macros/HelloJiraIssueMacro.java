@@ -10,7 +10,8 @@ public class HelloJiraIssueMacro implements Macro {
 
 	@Override
 	public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
-	        return "<b>HelloJiraIssue macro is here!</b>";
+	        String jiraIssueKey = parameters.get("jiraIssueKey");
+	        return "<b>HelloJiraIssue macro for issue: " + jiraIssueKey + "</b>";
 	}
 
 	@Override
