@@ -9,10 +9,9 @@ import com.atlassian.confluence.macro.MacroExecutionException;
 public class HelloJiraIssueMacro implements Macro {
 
 	@Override
-	public String execute(Map<String, String> arg0, String arg1,
-			ConversionContext arg2) throws MacroExecutionException {
-		// TODO Auto-generated method stub
-		return null;
+	public String execute(Map<String, String> parameters, String body, ConversionContext context) throws MacroExecutionException {
+	        // TODO Auto-generated method stub
+	        return null;
 	}
 
 	@Override
