@@ -34,5 +34,6 @@
     
     <!-- import from the product container -->
     <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+    <component-import key="entityLinkService" interface="com.atlassian.applinks.api.EntityLinkService" />
     
 </atlassian-plugin>
