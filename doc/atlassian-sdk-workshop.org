@@ -24,7 +24,7 @@ Planen er at jeg gjør steg for steg i dette dokumentet som en live demo og så 
 Tingene vi skal gjøre:
  1. [[#laste-ned-og-installere-atlassian-sdk][Få alle opp og kjøre med utviklingsomgivelsen]]
  2. [[#starte-opp-jira-standalone][Starte en Jira fra SDKen]], [[#logge-inn-og-lag-eksempelprosjekt-og-en-sak-i-prosjektet][lage et prosjekt og en sak i Jiraen]]
- 3. [[#lag-en-confluence-plugin][Lage en Confluenceplugin]]
+ 3. [[#lag-en-confluence-plugin][Lage en Confluence-plugin]]
  4. [[#sett-opp-ideen-p%C3%A5-pluginen][Importere Confluence-plugin'en som et Eclipse-prosjekt]]
  5. [[#starte-med-atlas-debug][starte en Confluence med plugin'en i]] (startes med mvn)
  6. [[#lag-en-makro-i-pluginen][Lage en makro i plugin'en]]
