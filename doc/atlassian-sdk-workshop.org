@@ -1,8 +1,44 @@
  -*- coding: utf-8 -*-
 * Atlassian SDK workshop
 
-Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i IDEen og lett å klikke seg fram til dokumentasjon.
+** Innledning
+
+Det vi skal gjøre idag er å lage en [[https://developer.atlassian.com/display/JIRADEV/Differences+between+Plugins1+and+Plugins2#DifferencesbetweenPlugins1andPlugins2-Plugins2][Atlassian type 2 plugin]] som inneholder en [[https://confluence.atlassian.com/display/DOC/Working+with+Macros][Confluence macro]] som henter litt data fra en [[https://confluence.atlassian.com/display/JIRA/What+is+an+Issue][Jira-sak]] og viser fram i en Confluence-side.
+
+Tanken er å vise fram alt det man trenger å gjøre, men hoppe over det unødvendige og spare dere tid man fort kan bruke på blindspor og det å lete fram dokumentasjon (som det kan være lite av, det /er/ en del dokumentasjon på Atlassians sider, men man vet ikke nødvendigvis hva som er riktig og hva som er egentlig er avlegs før man har prøvd det).
+
+*** Hva er en Confluence-makro
+En Confluence-makro er et objekt man setter inn i sideeditoren til Confluence, og som genererer et XHTML-fragment når siden vises.
+
+Vår makro skal kontakte en Jira-installasjon og hente beskrivelses-feltet fra en Jira-sak og formatere beskrivelsen som XHTML.
+
+*** Litt om Atlassian-plugins
+
+En Atlassian type 2-plugin kjøres som en OSGi-bundle i en OSGi runtime, og bruker Spring dependency injection for å få tak i APIet til applikasjonen den kjører i.
+
+Man trenger ikke å vite noe om OSGi og plugin'en som den bygges er ikke en OSGi-bundle, men når man laster jar-fila opp i f.eks. Confluence, så vil den bli gjort om til en bundle før den lastes opp.
+
+** Plan for dagen
+Planen er at jeg gjør steg for steg i dette dokumentet som en live demo og så får dere prøve å gjøre de samme bitene.
+
+Tingene vi skal gjøre:
+ 1. [[#laste-ned-og-installere-atlassian-sdk][Få alle opp og kjøre med utviklingsomgivelsen]]
+ 2. [[#starte-opp-jira-standalone][Starte en Jira fra SDKen]], [[#logge-inn-og-lag-eksempelprosjekt-og-en-sak-i-prosjektet][lage et prosjekt og en sak i Jiraen]]
+ 3. [[#lag-en-confluence-plugin][Lage en Confluence-plugin]]
+ 4. [[#sett-opp-ideen-p%C3%A5-pluginen][Importere Confluence-plugin'en som et Eclipse-prosjekt]]
+ 5. [[#starte-med-atlas-debug][starte en Confluence med plugin'en i]] (startes med mvn)
+ 6. [[#lag-en-makro-i-pluginen][Lage en makro i plugin'en]]
+ 7. [[#legg-p%C3%A5-issue-key-som-en-parameter-til-makroen][Legge på en parameter i makroen]] (en konfig-parameter man kan justere i side-editoren)
+ 8. [[#debug-inn-i-pluginen][Demonstrere debugging in i makroen]] (vi kan debugge koden mens den kjører inne i Confluence)
+ 9. [[#rapportere-feil-fra-makroen][Implementere feilrapportering i makroen]]
+ 10. [[#koble-makroen-mot-jira][Koble makroen mot Jira og hente data som vises fram]]
+
+Og da er vi egentlig ferdige.  Dersom vi blir tidlig ferdige så kan vi prøve oss på å ta en annen plugin-modul, f.eks. et REST-endpoint.
+
 ** Laste ned og installere Atlassian SDK
+   :PROPERTIES:
+   :CUSTOM_ID: laste-ned-og-installere-atlassian-sdk
+   :END:
  - Se [[https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project/install-the-atlassian-sdk-on-a-windows-system][Install the Atlassian SDK on a Windows System]]
  - Oppsett av eclipse
    - Installer eclipse
@@ -11,6 +47,9 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    - /TBD/
 
 ** Starte opp Jira standalone
+   :PROPERTIES:
+   :CUSTOM_ID: starte-opp-jira-standalone
+   :END:
  - Åpne et cmd.exe og gi følgende kommandoer:
    : cd %USERPROFILE%
    : rmdir /s /q %USERPROFILE%\amps-standalone\target
@@ -25,6 +64,9 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
        [INFO] Type Ctrl-C to exit
      #+END_EXAMPLE
 ** Logge inn og lag eksempelprosjekt og en sak i prosjektet
+   :PROPERTIES:
+   :CUSTOM_ID: logge-inn-og-lag-eksempelprosjekt-og-en-sak-i-prosjektet
+   :END:
  - Åpne [[http://localhost:2990/jira]] i en fane på en nettleser
  - Som "Username", skriv
    : admin
@@ -47,7 +89,10 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    - I feltet "Description" (litt nede i dialogen), skriv:
      : Når du kan lese denne teksten i Confluence er vi ferdige! Gratulerer!
    - Klikk på knappen "Create"
-** Lag en confluence-plugin:
+** Lag en confluence-plugin
+   :PROPERTIES:
+   :CUSTOM_ID: lag-en-confluence-plugin
+   :END:
  - Start cmd.exe
  - cd til egnet sted, f.eks.
    : mkdir %USERPROFILE%\fagdag
@@ -55,6 +100,12 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
  : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.jira.confluence.plugins.sdkintro --non-interactive
  - /Merk:/ Alle fire argumenter (gruppe, artifact, versjon og pakke) må være på plass for at =--non-interactive= skal fungere
 ** Sett opp IDEen på plugin'en
+   :PROPERTIES:
+   :CUSTOM_ID: sett-opp-ideen-p%C3%A5-pluginen
+   :END:
+
+En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin-module= men macro er ikke en av disse. Macro-moduler må lages manuelt.
+
 *** Åpne Confluence-plugin'en i eclipse
  - Åpne eclipse på et nytt workspace:
    - I Dialogen "Workspace Launcher":
@@ -107,6 +158,9 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
      - Klikk på knappen "OK"
 *** Åpne Confluence-plugin'en i IntelliJ
 ** Starte med atlas-debug
+   :PROPERTIES:
+   :CUSTOM_ID: starte-med-atlas-debug
+   :END:
  - Først start et cmd.exe og ta:
    : cd %USERPROFILE%\fagdag\sdkintro
    : atlas-debug
@@ -135,6 +189,9 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
      - Klikk på "Cancel"
    - Klikk på knappen "Save"
 ** Lag en makro i plugin'en
+   :PROPERTIES:
+   :CUSTOM_ID: lag-en-makro-i-pluginen
+   :END:
 *** I eclipse
  - Åpne eclipse på [[Åpne Confluence-plugin'en i eclipse][workspace't der man importerte plugin-prosjektet]]
  - Lag en ny pakke:
@@ -244,6 +301,9 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
 *** I IntelliJ
  - /TBD/
 ** Legg på "issue key" som en parameter til makroen
+   :PROPERTIES:
+   :CUSTOM_ID: legg-p%C3%A5-issue-key-som-en-parameter-til-makroen
+   :END:
  - Sjekk at makroen ikke har noen parameter:
    - Gå til Confluence i en nettleser ([[http://localhost:1990/confluence]]) og ta Edit på sida du lagde tidligere ("Min testside")
      - Klikk på "Edit" (oppe til høyre på siden, samme rad som "Tools"
@@ -280,6 +340,9 @@ Ideen med dette dokumentet er at det skal være lett å kopiere kodebiter over i
    : pi
  - Ta en reload på "Min testside" og observer at teksten i fet skrift er "Hello jira issue macro for:(null)"
 ** Debug inn i plugin'en
+   :PROPERTIES:
+   :CUSTOM_ID: debug-inn-i-pluginen
+   :END:
 Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" så har vi en mulighet til å debugge direkte inn i plugin'en.
 *** Med eclipse
  - Velg fra menyen Run->Debug Configurations...
@@ -312,6 +375,9 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
  - Gå tilbake til Java perspective
 *** Med IntelliJ
 ** Rapportere feil fra makroen
+   :PROPERTIES:
+   :CUSTOM_ID: rapportere-feil-fra-makroen
+   :END:
 Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/macro/MacroExecutionException.html][MacroExecutionException]] kan man både rapportere feil der makroen står på en Confluence-side og i loggen til Confluence.
 
  - Endre =execute()= i =HelloJiraIssueMacro til dette:
@@ -339,7 +405,10 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
  - Gå til cmd.exe som kjører =atlas-debug= og se at man finner en slik linje (SDK Confluence logger til konsoll istedenfor til f.eks. catalina.out):
    : [INFO] [talledLocalContainer] 2015-01-14 12:49:10,731 WARN [http-1990-7] [xhtml.view.macro.ViewMacroMarshaller] marshalInternal Exception executing macro: hello-jira-issue-macro, with message: A jiraIssueKey referencing a valid Jira issue is required
    - SDK Jira logger til en fil
-** Koble makroen mot Confluence
+** Koble makroen mot Jira
+   :PROPERTIES:
+   :CUSTOM_ID: koble-makroen-mot-jira
+   :END:
  - Vi skal bruke [[https://docs.atlassian.com/jira/REST/latest/#d2e4292][Jira REST API]]
  - Få inn en [[https://docs.atlassian.com/applinks-api/3.2/com/atlassian/applinks/api/EntityLinkService.html][EntityLinkService]] og bruke denne til å navigere til koblet Jira:
    - Legg til =org.json:json= som "provided" avhenghet, dvs.:
