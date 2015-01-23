@@ -97,7 +97,7 @@ Og da er vi egentlig ferdige.  Dersom vi blir tidlig ferdige så kan vi prøve o
  - cd til egnet sted, f.eks.
    : mkdir %USERPROFILE%\fagdag
    : cd %USERPROFILE%\fagdag
- : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.jira.confluence.plugins.sdkintro --non-interactive
+ : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.confluence.plugins.sdkintro --non-interactive
  - /Merk:/ Alle fire argumenter (gruppe, artifact, versjon og pakke) må være på plass for at =--non-interactive= skal fungere
 ** Sett opp IDEen på plugin'en
    :PROPERTIES:
@@ -199,11 +199,11 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - Høyreklikk pakken som allerede ligger der og ta: New->Package
    - I dialogen "New Java Package":
      - I "Name", legg inn:
-       : no.steria.jira.confluence.plugins.sdkintro.macros
+       : no.steria.confluence.plugins.sdkintro.macros
      - Klikk på knappen "Finish"
- - Lag en makro i pakken =no.steria.jira.confluence.plugins.sdkintro.macro=
+ - Lag en makro i pakken =no.steria.confluence.plugins.sdkintro.macro=
    - Lag en ny klasse som implementerer interface't [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/macro/Macro.html][Macro]]:
-     - Høyreklikk =no.steria.jira.confluence.plugins.sdkintro.macro= og ta New->Class
+     - Høyreklikk =no.steria.confluence.plugins.sdkintro.macro= og ta New->Class
      - I dialogen "New Java Class":
        - I "Name", skriv:
          : HelloJiraIssueMacro
@@ -218,7 +218,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
        - Klikk på knappen "Finish"
    - Følgende kode blir generert:
      #+BEGIN_SRC java
-       package no.steria.jira.confluence.plugins.sdkintro.macro;
+       package no.steria.confluence.plugins.sdkintro.macro;
 
        import java.util.Map;
 
@@ -279,7 +279,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - Åpne fila =atlassian-plugin.xml=
    - Legg inn følgende XML-kode i =atlassian-plugin.xml= (nivået under topp-elementet =<atlassian-plugin>=, rett etter =<web-resource>=)
      #+BEGIN_SRC nxml
-       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
+       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
            <parameters/>
        </xhtml-macro>
      #+END_SRC
@@ -316,7 +316,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - Åpne fila =atlassian-plugin.xml=
    - Endre <xhtml-macro>-elementet i =atlassian-plugin.xml= slik:
      #+BEGIN_SRC nxml
-       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="my-macro">
+       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="my-macro">
         <parameters>
          <parameter name="jiraIssueKey" type="string"/>
         </parameters>
