@@ -103,6 +103,9 @@ Og da er vi egentlig ferdige.  Dersom vi blir tidlig ferdige så kan vi prøve o
    :PROPERTIES:
    :CUSTOM_ID: sett-opp-ideen-p%C3%A5-pluginen
    :END:
+
+En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin-module= men macro er ikke en av disse. Macro-moduler må lages manuelt.
+
 *** Åpne Confluence-plugin'en i eclipse
  - Åpne eclipse på et nytt workspace:
    - I Dialogen "Workspace Launcher":
