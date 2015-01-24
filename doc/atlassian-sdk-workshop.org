@@ -391,6 +391,7 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
      - For "Port", skriv:
        : 5005
    - Lagre og klikk Debug etterpå.
+   - [[https://developer.atlassian.com/docs/developer-tools/working-in-an-ide/creating-a-remote-debug-target][Creating a Remote Debug Target]]
 ** Rapportere feil fra makroen
    :PROPERTIES:
    :CUSTOM_ID: rapportere-feil-fra-makroen
