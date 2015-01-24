@@ -157,6 +157,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - I dialogen "Update Maven Project"
      - Klikk på knappen "OK"
 *** Åpne Confluence-plugin'en i IntelliJ
+ - /TBD/
 ** Starte med atlas-debug
    :PROPERTIES:
    :CUSTOM_ID: starte-med-atlas-debug
@@ -374,6 +375,7 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
    - Høyreklikk "sdkintro confluence" og velg Disconnect
  - Gå tilbake til Java perspective
 *** Med IntelliJ
+ - /TBD/
 ** Rapportere feil fra makroen
    :PROPERTIES:
    :CUSTOM_ID: rapportere-feil-fra-makroen
