@@ -44,7 +44,7 @@ Og da er vi egentlig ferdige.  Dersom vi blir tidlig ferdige så kan vi prøve o
    - Installer eclipse
    - Installér m2e
  - Oppsett av IntelliJ
-   - /TBD/
+   - [[https://developer.atlassian.com/docs/developer-tools/working-in-an-ide/configure-idea-to-use-the-sdk][Configure IDEA to use the SDK]]
 
 ** Starte opp Jira standalone
    :PROPERTIES:
@@ -157,6 +157,12 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - I dialogen "Update Maven Project"
      - Klikk på knappen "OK"
 *** Åpne Confluence-plugin'en i IntelliJ
+   - Bruk "Import project"
+   - Velg pom.xml fil fra generert prosjektet
+   - Oppdater Maven i IntelliJ:
+     - Maven home dir: : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1
+	 - User settings file : : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1\conf\settings.xml
+	 - Local repository : : %USERPROFILE%\atlassian-plugin-sdk\repository
 ** Starte med atlas-debug
    :PROPERTIES:
    :CUSTOM_ID: starte-med-atlas-debug
@@ -192,7 +198,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    :PROPERTIES:
    :CUSTOM_ID: lag-en-makro-i-pluginen
    :END:
-*** I eclipse
+*** I eclipse og IntelliJ
  - Åpne eclipse på [[Åpne Confluence-plugin'en i eclipse][workspace't der man importerte plugin-prosjektet]]
  - Lag en ny pakke:
    - Åpne mappen =src/main/java=
@@ -298,8 +304,6 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
      - Klikk på knappen "Insert"
    - Klikk på knappen "Save" (nederst i side-editoren)
  - Siden har nå teksten "*HelloJiraIssue macro is here!*"
-*** I IntelliJ
- - /TBD/
 ** Legg på "issue key" som en parameter til makroen
    :PROPERTIES:
    :CUSTOM_ID: legg-p%C3%A5-issue-key-som-en-parameter-til-makroen
@@ -374,6 +378,19 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
    - Høyreklikk "sdkintro confluence" og velg Disconnect
  - Gå tilbake til Java perspective
 *** Med IntelliJ
+ - Velg fra menyen Edit Configurations...
+ - I dialogen "Run/Debug Configurations":
+   - Velg "Remote"
+   - Klikk på "New"-knappen
+   - I "Name", skriv:
+     : sdkintro confluence
+   - Velg prosjektet sdkintro fra "Sources".
+   - Under "Connection Properties":
+     - For "Host", skriv:
+       : localhost
+     - For "Port", skriv:
+       : 5005
+   - Lagre og klikk Debug etterpå.
 ** Rapportere feil fra makroen
    :PROPERTIES:
    :CUSTOM_ID: rapportere-feil-fra-makroen
@@ -434,7 +451,16 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
          - Klikk på knappen "OK"
        - Lagre =pom.xml=
      - I IntelliJ:
-       - TBD!
+       - Åpne =pom.xml= i sdkintro-prosjeket
+       - Bruk Alt + Insert og velg "Dependency"
+       - I dialogen "Maven Artifack Search"
+         - I søkfeltet, skriv:
+           : org.json
+         - I "Search results":
+           - velg "org.json json" siste versjon
+         - I "Scope", velg "provided"
+         - Klikk på knappen "OK"
+       - Lagre =pom.xml=
    - Legg til =EntityLinkService= som en komponentavhengighet:
      - Åpne =src/main/resoures=-mappen
      - Åpne =atlassian-plugin.xml=
