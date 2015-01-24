@@ -157,16 +157,12 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - I dialogen "Update Maven Project"
      - Klikk på knappen "OK"
 *** Åpne Confluence-plugin'en i IntelliJ
-<<<<<<< HEAD
    - Bruk "Import project"
    - Velg pom.xml fil fra generert prosjektet
    - Oppdater Maven i IntelliJ:
      - Maven home dir: : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1
 	 - User settings file : : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1\conf\settings.xml
 	 - Local repository : : %USERPROFILE%\atlassian-plugin-sdk\repository
-=======
- - /TBD/
->>>>>>> 4a09663f3f86227bf68b119a576acd85b9808bdd
 ** Starte med atlas-debug
    :PROPERTIES:
    :CUSTOM_ID: starte-med-atlas-debug
@@ -382,7 +378,6 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
    - Høyreklikk "sdkintro confluence" og velg Disconnect
  - Gå tilbake til Java perspective
 *** Med IntelliJ
-<<<<<<< HEAD
  - Velg fra menyen Edit Configurations...
  - I dialogen "Run/Debug Configurations":
    - Velg "Remote"
@@ -396,9 +391,6 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
      - For "Port", skriv:
        : 5005
    - Lagre og klikk Debug etterpå.
-=======
- - /TBD/
->>>>>>> 4a09663f3f86227bf68b119a576acd85b9808bdd
 ** Rapportere feil fra makroen
    :PROPERTIES:
    :CUSTOM_ID: rapportere-feil-fra-makroen
