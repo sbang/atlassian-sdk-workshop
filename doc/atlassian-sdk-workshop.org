@@ -97,7 +97,7 @@ Og da er vi egentlig ferdige.  Dersom vi blir tidlig ferdige så kan vi prøve o
  - cd til egnet sted, f.eks.
    : mkdir %USERPROFILE%\fagdag
    : cd %USERPROFILE%\fagdag
- : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.jira.confluence.plugins.sdkintro --non-interactive
+ : atlas-create-confluence-plugin --group-id no.steria.confluence --artifact-id sdkintro --version 1.0 --package no.steria.confluence.plugins.sdkintro --non-interactive
  - /Merk:/ Alle fire argumenter (gruppe, artifact, versjon og pakke) må være på plass for at =--non-interactive= skal fungere
 ** Sett opp IDEen på plugin'en
    :PROPERTIES:
@@ -157,12 +157,16 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - I dialogen "Update Maven Project"
      - Klikk på knappen "OK"
 *** Åpne Confluence-plugin'en i IntelliJ
+<<<<<<< HEAD
    - Bruk "Import project"
    - Velg pom.xml fil fra generert prosjektet
    - Oppdater Maven i IntelliJ:
      - Maven home dir: : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1
 	 - User settings file : : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1\conf\settings.xml
 	 - Local repository : : %USERPROFILE%\atlassian-plugin-sdk\repository
+=======
+ - /TBD/
+>>>>>>> 4a09663f3f86227bf68b119a576acd85b9808bdd
 ** Starte med atlas-debug
    :PROPERTIES:
    :CUSTOM_ID: starte-med-atlas-debug
@@ -205,11 +209,11 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - Høyreklikk pakken som allerede ligger der og ta: New->Package
    - I dialogen "New Java Package":
      - I "Name", legg inn:
-       : no.steria.jira.confluence.plugins.sdkintro.macros
+       : no.steria.confluence.plugins.sdkintro.macros
      - Klikk på knappen "Finish"
- - Lag en makro i pakken =no.steria.jira.confluence.plugins.sdkintro.macro=
+ - Lag en makro i pakken =no.steria.confluence.plugins.sdkintro.macro=
    - Lag en ny klasse som implementerer interface't [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/macro/Macro.html][Macro]]:
-     - Høyreklikk =no.steria.jira.confluence.plugins.sdkintro.macro= og ta New->Class
+     - Høyreklikk =no.steria.confluence.plugins.sdkintro.macro= og ta New->Class
      - I dialogen "New Java Class":
        - I "Name", skriv:
          : HelloJiraIssueMacro
@@ -224,7 +228,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
        - Klikk på knappen "Finish"
    - Følgende kode blir generert:
      #+BEGIN_SRC java
-       package no.steria.jira.confluence.plugins.sdkintro.macro;
+       package no.steria.confluence.plugins.sdkintro.macro;
 
        import java.util.Map;
 
@@ -285,7 +289,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - Åpne fila =atlassian-plugin.xml=
    - Legg inn følgende XML-kode i =atlassian-plugin.xml= (nivået under topp-elementet =<atlassian-plugin>=, rett etter =<web-resource>=)
      #+BEGIN_SRC nxml
-       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
+       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="hello-jira-issue-macro">
            <parameters/>
        </xhtml-macro>
      #+END_SRC
@@ -320,7 +324,7 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - Åpne fila =atlassian-plugin.xml=
    - Endre <xhtml-macro>-elementet i =atlassian-plugin.xml= slik:
      #+BEGIN_SRC nxml
-       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.jira.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="my-macro">
+       <xhtml-macro name="hello-jira-issue-macro" class="no.steria.confluence.plugins.sdkintro.macros.HelloJiraIssueMacro" key="my-macro">
         <parameters>
          <parameter name="jiraIssueKey" type="string"/>
         </parameters>
@@ -378,6 +382,7 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
    - Høyreklikk "sdkintro confluence" og velg Disconnect
  - Gå tilbake til Java perspective
 *** Med IntelliJ
+<<<<<<< HEAD
  - Velg fra menyen Edit Configurations...
  - I dialogen "Run/Debug Configurations":
    - Velg "Remote"
@@ -391,6 +396,9 @@ Ettersom vi startet "atlas-debug" på plugin-prosjektet istedenfor "atlas-run" s
      - For "Port", skriv:
        : 5005
    - Lagre og klikk Debug etterpå.
+=======
+ - /TBD/
+>>>>>>> 4a09663f3f86227bf68b119a576acd85b9808bdd
 ** Rapportere feil fra makroen
    :PROPERTIES:
    :CUSTOM_ID: rapportere-feil-fra-makroen
@@ -482,6 +490,11 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
      
      SpaceManager-objektet skal vi bruke til å finne et [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/spaces/Space.html][Space]]
      EntityLinkService-objektet skal vi så bruke til å få kontakt med et Jira-prosjekt som er koblet mot prosjektet, og derfra en Jira-instans.
+   - Fiks manglende =import=-setninger:
+     - Ta "Quick Fix" på  =SpaceManager= og velg:
+       : Import 'SpaceManager' (com.atlassian.confluence.spaces)
+     - Ta "Quick Fix" på  =EntityLinkService= og velg:
+       : Import 'EntityLinkService' (com.atlassian.applinks.api)
    - Endre =execute()=-metoden til å se slik ut:
      #+BEGIN_SRC java
        @Override
@@ -523,6 +536,29 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
                }
        }
      #+END_SRC
+   - Fiks manglende =import=-setninger:
+     - Ta "Quick Fix" på  =Space= og velg:
+       : Import 'Space' (com.atlassian.confluence.spaces)
+     - Ta "Quick Fix" på  =EntityLinkService= og velg:
+       : Import 'EntityLink' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =JiraProjectEntityType= og velg:
+       : Import 'JiraProjectEntityType' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =ApplicationLinkRequestFactory= og velg:
+       : Import 'ApplicationLinkRequestFactory' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =ApplicationLinkRequest= og velg:
+       : Import 'ApplicationLinkRequest' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =MethodType= og velg:
+       : Import 'MethodType' (com.atlassian.sal.api.net.Request)
+     - Ta "Quick Fix" på  =JSONObject= og velg:
+       : Import 'JSONObject' (org.json)
+       /Merk: her er det tre alternativ, og om du velger feil import, må du velge samme pakke på JSONException lengre ned!/
+       (de andre alternativene vil fungere, men er deprecated. Atlassian har OSGi-bundlet vanlig "org.json" og lagt den i runtimen sin)
+     - Ta "Quick Fix" på  =CredentialsRequiredException= og velg:
+       : Import 'CredentialsRequiredException' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =ResponseException= og velg:
+       : Import 'ResponseException' (com.atlassian.sal.api.net)
+     - Ta "Quick Fix" på  =JSONObject= og velg:
+       : Import 'JSONObject' (org.json)
  - Gå til cmd.exe som kjører =atlas-cli= og gi kommandoen:
    : pi
  - Ta en reload på "Min testside" og se at teksten endrer seg fra 
