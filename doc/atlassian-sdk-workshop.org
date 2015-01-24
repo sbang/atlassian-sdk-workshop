@@ -456,6 +456,11 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
      
      SpaceManager-objektet skal vi bruke til å finne et [[https://docs.atlassian.com/confluence/latest/com/atlassian/confluence/spaces/Space.html][Space]]
      EntityLinkService-objektet skal vi så bruke til å få kontakt med et Jira-prosjekt som er koblet mot prosjektet, og derfra en Jira-instans.
+   - Fiks manglende =import=-setninger:
+     - Ta "Quick Fix" på  =SpaceManager= og velg:
+       : Import 'SpaceManager' (com.atlassian.confluence.spaces)
+     - Ta "Quick Fix" på  =EntityLinkService= og velg:
+       : Import 'EntityLinkService' (com.atlassian.applinks.api)
    - Endre =execute()=-metoden til å se slik ut:
      #+BEGIN_SRC java
        @Override
@@ -497,6 +502,29 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
                }
        }
      #+END_SRC
+   - Fiks manglende =import=-setninger:
+     - Ta "Quick Fix" på  =Space= og velg:
+       : Import 'Space' (com.atlassian.confluence.spaces)
+     - Ta "Quick Fix" på  =EntityLinkService= og velg:
+       : Import 'EntityLink' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =JiraProjectEntityType= og velg:
+       : Import 'JiraProjectEntityType' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =ApplicationLinkRequestFactory= og velg:
+       : Import 'ApplicationLinkRequestFactory' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =ApplicationLinkRequest= og velg:
+       : Import 'ApplicationLinkRequest' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =MethodType= og velg:
+       : Import 'MethodType' (com.atlassian.sal.api.net.Request)
+     - Ta "Quick Fix" på  =JSONObject= og velg:
+       : Import 'JSONObject' (org.json)
+       /Merk: her er det tre alternativ, og om du velger feil import, må du velge samme pakke på JSONException lengre ned!/
+       (de andre alternativene vil fungere, men er deprecated. Atlassian har OSGi-bundlet vanlig "org.json" og lagt den i runtimen sin)
+     - Ta "Quick Fix" på  =CredentialsRequiredException= og velg:
+       : Import 'CredentialsRequiredException' (com.atlassian.applinks.api)
+     - Ta "Quick Fix" på  =ResponseException= og velg:
+       : Import 'ResponseException' (com.atlassian.sal.api.net)
+     - Ta "Quick Fix" på  =JSONObject= og velg:
+       : Import 'JSONObject' (org.json)
  - Gå til cmd.exe som kjører =atlas-cli= og gi kommandoen:
    : pi
  - Ta en reload på "Min testside" og se at teksten endrer seg fra 
