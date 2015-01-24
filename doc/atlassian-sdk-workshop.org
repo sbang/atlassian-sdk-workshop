@@ -161,8 +161,8 @@ En del typer av plugin-moduler kan genereres med =atlas-create-confluence-plugin
    - Velg pom.xml fil fra generert prosjektet
    - Oppdater Maven i IntelliJ:
      - Maven home dir: : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1
-	 - User settings file : : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1\conf\settings.xml
-	 - Local repository : : %USERPROFILE%\atlassian-plugin-sdk\repository
+     - User settings file : : %USERPROFILE%\atlassian-plugin-sdk\apache-maven-3.2.1\conf\settings.xml
+     - Local repository : : %USERPROFILE%\atlassian-plugin-sdk\repository
 ** Starte med atlas-debug
    :PROPERTIES:
    :CUSTOM_ID: starte-med-atlas-debug
@@ -454,7 +454,7 @@ Ved å kaste en [[https://docs.atlassian.com/confluence/latest/com/atlassian/con
      - I IntelliJ:
        - Åpne =pom.xml= i sdkintro-prosjeket
        - Bruk Alt + Insert og velg "Dependency"
-       - I dialogen "Maven Artifack Search"
+       - I dialogen "Maven Artifact Search"
          - I søkfeltet, skriv:
            : org.json
          - I "Search results":
