@@ -2,3 +2,7 @@
 * Innledning
 
 Dette er kode og dokumentasjon for en workshop som skal gi en introduksjon til Atlassian SDK.
+
+[[https://github.com/sbang/atlassian-sdk-workshop/blob/master/doc/atlassian-sdk-workshop.org][=doc/atlassian-sdk-workshop.org= inneholder workshopen med kopi/lim av kodeeksemplene
+
+Branchen [[https://github.com/sbang/atlassian-sdk-workshop/tree/workshop-example-in-eclipse/src/sdkintro][workshop-example-in-eclipse]] inneholder en gjennomkjøring av case't i workshop'en, med commits for hvert steg.
